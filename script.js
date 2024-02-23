@@ -1,3 +1,19 @@
+const roundResult = document.querySelector('#round-score');
+
+const rockBtn = document.querySelector('#rockBtn');
+rockBtn.addEventListener('click', () => {
+  playRound("rock", getComputerChoice());
+});
+const paperBtn = document.querySelector('#paperBtn');
+paperBtn.addEventListener('click', () => {
+  playRound("paper", getComputerChoice());
+});
+const scissorsBtn = document.querySelector('#scissorsBtn');
+scissorsBtn.addEventListener('click', () => {
+  playRound("scissors", getComputerChoice());
+});
+
+
 function getComputerChoice() {
   const num = Math.floor(Math.random() * 3);
   if (num == 0) {
@@ -12,34 +28,47 @@ function getComputerChoice() {
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === "scissors") {
     if (computerSelection === "scissors") {
-      console.log("You drew.");
+      roundResult.textContent = "You drew";
     } else if (computerSelection === "paper") {
-      console.log("You won! Scissors beats paper.");
+      roundResult.textContent = "You won! Scissors beats paper.";
+      updateScore(true);
     } else {
-      console.log("You lost! Rock beats scissors");
+      roundResult.textContent = "You lost! Rock beats scissors";
+      updateScore(false);
     }
   } else if (playerSelection === "paper") {
     if (computerSelection === "scissors") {
-      console.log("You lose! Scissors beats paper.");
+      roundResult.textContent = "You lose! Scissors beats paper.";
+      updateScore(false);
     } else if (computerSelection === "paper") {
-      console.log("You drew.");
+      roundResult.textContent = "You drew.";
     } else {
-      console.log("You won! Paper beats rock.");
+      roundResult.textContent = "You won! Paper beats rock.";
+      updateScore(true);
     }
   } else if (playerSelection === "rock") {
     if (computerSelection === "scissors") {
-      console.log("You Won! Rock beats scissors.");
+      roundResult.textContent = "You Won! Rock beats scissors.";
+      updateScore(true);
     } else if (computerSelection === "paper") {
-      console.log("You lose. Paper beats rock.");
+      roundResult.textContent = "You lose. Paper beats rock.";
+      updateScore(false);
     } else {
-      console.log("You drew.");
+      roundResult.textContent = "You drew.";
     }
   }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-
-console.log(playRound(playerSelection, computerSelection))
+const scoreText = document.querySelector('#score')
+let playerScore = 0;
+let computerScore = 0;
+function updateScore(playerWon) {
+  if (playerWon) {
+    playerScore++;
+  } else {
+    computerScore++;
+  }
+  scoreText.textContent = `Player ${playerScore} - ${computerScore} Computer`
+}
 
 
